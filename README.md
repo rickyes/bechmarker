@@ -1,2 +1,2 @@
-# bechmarker
-Bechmarker for Node.js
+# HTTP-Benchmarker
+HTTP benchmarker for Node.js

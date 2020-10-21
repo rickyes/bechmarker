@@ -1,0 +1,23 @@
+{
+  "name": "http-benchmarker",
+  "version": "0.0.1",
+  "description": "HTTP-Benchmarker for Node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rickyes/http-benchmarker.git"
+  },
+  "keywords": [
+    "http",
+    "benchmarker"
+  ],
+  "author": "Ricky <0x19951125@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rickyes/http-benchmarker/issues"
+  },
+  "homepage": "https://github.com/rickyes/http-benchmarker#readme"
+}

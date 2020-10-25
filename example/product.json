@@ -1,0 +1,19 @@
+{
+    "apis": [
+        {
+            "title": "Get Products",
+            "method": "get",
+            "url": "/merchants/:merchantId/sale_events/:saleEventId/products",
+            "params": {
+                ":merchantId": "5e9e900e78923a006fcb0530",
+                ":saleEventId": "5f3cf327b2cec90028917849"
+            },
+            "query": {
+                "page": 1,
+                "limit": 20
+            },
+            "modeler": "",
+            "mocker": ""
+        }
+    ]
+}

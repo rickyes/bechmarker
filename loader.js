@@ -5,7 +5,7 @@ const path = require('path');
 
 class Loader {
   constructor(opts = {}) {
-    this.apiDirs = opts.apiDirs || [__dirname];
+    this.apiDir = opts.apiDirs || path.join(process.cwd(), 'benchmarks');
   }
 
   load() {

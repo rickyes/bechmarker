@@ -5,12 +5,14 @@ const Benchmarker = require('./benchmarker');
 
 /**
  * @param {Object} opts
+ * @param {String} [opts.apiDir=./benchmarkers]
+ * @param {String}
  */
-function run(opts = {}) {
+module.exports = function benchmarker(opts = {}) {
   const loader = new Loader(opts.apiDirs);
   const bench = new Benchmarker({
-    ...omit(opts, 'apiDirs'),
+    ...opts,
     apis: loader.load(),
   });
-  bench.make();
+  return bench;
 }

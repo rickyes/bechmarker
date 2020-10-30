@@ -28,10 +28,10 @@ class Benchmarker extends EventEmitter {
     this.queues = opts.apis || [];
     this.baseURL = opts.baseURL || 'http://localhost';
     this.config = opts.config || {};
-    this.on('completed', this.make);
+    this.on('finish', this.make);
     this.taskCount = 0;
     this.benchmarkerInstance = undefined;
-    process.once('SIGINT', () => {
+    process.on('SIGINT', () => {
       // eslint-disable-next-line no-unused-expressions
       this.benchmarkerInstance && this.benchmarkerInstance.stop();
     });
@@ -42,7 +42,7 @@ class Benchmarker extends EventEmitter {
       this.taskCount++;
       const api = this.prepareParams(this.queues.shift());
       this.benchmarkerInstance = benchmarker(api, (err, res) => {
-        this.emit('completed');
+        this.emit('finish');
         this.buildReport(res);
       });
       benchmarker.track(this.benchmarkerInstance, {
@@ -50,7 +50,7 @@ class Benchmarker extends EventEmitter {
         renderResultsTable: true,
       });
     } else {
-      this.emit('finish');
+      this.emit('close');
     }
   }
 
@@ -102,8 +102,10 @@ module.exports = Benchmarker;
  * @property {String} title
  * @property {String} method
  * @property {String} url
- * @property {Object} headers
- * @property {Object} params
- * @property {Object} query
- * @property {Object} body
+ * @property {Object} [headers]
+ * @property {Object} [params]
+ * @property {Object} [query]
+ * @property {Object} [body]
+ * @property {String} [mocker]
+ * @property {String} [modeler]
  */

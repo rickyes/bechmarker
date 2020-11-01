@@ -5,6 +5,8 @@ const { EventEmitter } = require('events');
 const benchmarker = require('autocannon');
 const reporter = require('autocannon-reporter');
 const pkg = require('./package.json');
+const Modeler = require('./modelers');
+const Mocker = require('./mockers');
 
 const benchmarkerName = pkg.name;
 const benchmarkerVersion = pkg.version;
@@ -28,7 +30,11 @@ class Benchmarker extends EventEmitter {
     this.queues = opts.apis || [];
     this.baseURL = opts.baseURL || 'http://localhost';
     this.config = opts.config || {};
-    this.on('finish', this.make);
+    this.on('finish', async (api) => {
+      if (api.modeler && Modeler.clearModeler) await Modeler.clearModeler(api);
+      if (api.mocker && Mocker.clearMocker) await Mocker.clearMocker(api);
+      this.make();
+    });
     this.taskCount = 0;
     this.benchmarkerInstance = undefined;
     process.on('SIGINT', () => {
@@ -70,6 +76,16 @@ class Benchmarker extends EventEmitter {
    */
   prepareParams(api) {
     if (!api || !api.url) return undefined;
+
+    // load mock
+    let modelerData;
+    if (api.modeler) {
+      modelerData = await Modeler.loadModeler(api);
+    }
+
+    if (api.mocker && isEmpty(modelerData)) {
+      await Mocker.loadMocker(api, modelerData);
+    }
 
     const originUrl = api.url;
 
